@@ -23,7 +23,7 @@ export default function Navbar() {
 
           {/* LOGO */}
           <Link to="/" className="text-xl font-bold text-blue-600">
-           <img src="/logo.png" className="h-20 w-20 object-cover" alt="" />
+           <img src="/logo.png" className="h-15 w-15 md:h-20 md:w-20 object-cover" alt="" />
           </Link>
 
           {/* DESKTOP MENU */}
@@ -31,22 +31,40 @@ export default function Navbar() {
             <Link className="text-gray-700 hover:text-blue-600" to="/">Home</Link>
             <Link className="text-gray-700 hover:text-blue-600" to="/all">Products</Link>
 
-            <Link to="/cart" className="text-gray-700 hover:text-blue-600 font-medium">
-              <ShoppingCart />
-            </Link>
+          
 
             {!user ? (
+              <>
               <Link
                 to="/login"
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
               >
                 Login
               </Link>
+               <Link
+                to="/signup"
+                className="bg-purple-700 text-white px-4 py-2 rounded-lg hover:bg-purple-800 transition"
+              >
+                signup
+              </Link>
+              </>
             ) : (
               <div className="flex items-center gap-3">
+              <Link to="/cart" className="text-gray-700 hover:text-blue-600 font-medium">
+               Cart
+               </Link>
+               <Link to="/my-orders" className="text-gray-700 hover:text-blue-600 font-medium">
+                Orders
+              </Link>
+                {user.role == "admin"&&(
+                <Link to="/admin" className="text-gray-700 hover:text-blue-600 font-medium">
+                Admin
+              </Link>
+               )}
                <p className="text-gray-700">
                  {user.email.split("@")[0]}
-               </p>              
+               </p>     
+                      
                <button
                   onClick={() => signOut(auth)}
                   className="bg-red-500 text-white px-3 py-1.5 rounded-lg hover:bg-red-600 transition"
@@ -91,17 +109,46 @@ export default function Navbar() {
 
         {/* Menu Links */}
         <nav className="flex flex-col gap-4 text-gray-700">
+         {user&&(
+            <div className=" w-full ">
+           <div className="bg-gray-200 text-3xl rounded-full h-20 w-20 flex justify-center items-center">
+             {user?.email.split("")[0]}
+           </div>
+            <p className="text-gray-700">
+                 {user.email.split("@")[0]}
+               </p>  
+          </div>
+         )}
           <Link
           className="flex flex-row gap-2"
-           to="/" onClick={() => setOpen(false)}> Home <Home /></Link>
+           to="/" onClick={() => setOpen(false)}> Home </Link>
           <Link
           className="flex flex-row gap-2"
-          to="/all" onClick={() => setOpen(false)}>Products <PackageSearch /></Link>
-         <Link 
+          to="/all" onClick={() => setOpen(false)}>Products </Link>
+          {user&&(
+          <>
+            <Link 
          className="flex flex-row gap-2"
-         to="/cart" onClick={() => setOpen(false)}>Cart <ShoppingCart /></Link>
+         to="/cart" onClick={() => setOpen(false)}>Cart </Link>
+
+          <Link 
+         className="flex flex-row gap-2"
+         to="/my-orders" onClick={() => setOpen(false)}>Order </Link>
+
+           {user.role=="admin"&&(
+              <Link
+              to="/admin"
+              onClick={() => setOpen(false)}
+              className="bg-purple-700 text-white text-center px-4 py-2 rounded-lg"
+            >
+              Admin
+            </Link>
+            )}
+          </>
+          )}
 
           {!user ? (
+            <>
             <Link
               to="/login"
               onClick={() => setOpen(false)}
@@ -109,13 +156,22 @@ export default function Navbar() {
             >
               Login
             </Link>
+            <Link
+              to="/signup"
+              onClick={() => setOpen(false)}
+              className="bg-purple-700 text-white text-center px-4 py-2 rounded-lg"
+            >
+              signup
+            </Link>
+          
+            </>
           ) : (
             <button
               onClick={() => {
                 signOut(auth);
                 setOpen(false);
               }}
-              className="bg-red-500 text-white px-4 py-2 rounded-lg"
+              className="bg-red-500 text-white px-4 py-2  rounded-lg"
             >
               Logout
             </button>

@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
 export const AuthContext = createContext();
 
@@ -9,8 +10,22 @@ export default function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (!firebaseUser) {
+        setUser(null);
+        setLoading(false);
+        return;
+      }
+
+      // Fetch extra user data from Firestore
+      const snap = await getDoc(doc(db, "users", firebaseUser.uid));
+
+      setUser({
+        uid: firebaseUser.uid,
+        email: firebaseUser.email,
+        ...snap.data(), // contains phone, role, createdAt, etc.
+      });
+
       setLoading(false);
     });
 

@@ -11,6 +11,12 @@ import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderSuccess from "./pages/OrderSuccess";
 import MyOrders from "./pages/MyOrders";
+import ProtectedAdminRoute from "./admin/ProtectedAdminRoute";
+import AdminOrders from "./admin/AdminOrders"
+import AdminProducts from "./admin/AdminProducts";
+import AddProduct from "./admin/AddProduct";
+import AdminDashboard from "./admin/Admin";
+import AdminEditProduct from "./admin/EditProduct";
 function App() {
   return (
     <BrowserRouter>
@@ -25,6 +31,11 @@ function App() {
         <Route path="/cheekout" element={<CheckoutPage />} />
         <Route path="/order-success/:orderId" element={<OrderSuccess />} />
        <Route path="/my-orders" element={<MyOrders />} />
+      <Route path="/admin" element={ <ProtectedAdminRoute> <AdminDashboard /> </ProtectedAdminRoute> }/>
+      <Route path="/admin/orders" element={ <ProtectedAdminRoute> <AdminOrders /> </ProtectedAdminRoute> }/>
+      <Route path="/admin/products" element={ <ProtectedAdminRoute> <AdminProducts /> </ProtectedAdminRoute> }/>
+      <Route path="/admin/add-product" element={ <ProtectedAdminRoute> <AddProduct /> </ProtectedAdminRoute> }/>
+      <Route path="/admin/edit-product/:firebaseId" element={ <ProtectedAdminRoute> <AdminEditProduct /> </ProtectedAdminRoute> }/>
 
       </Routes>
       <Footer />
@@ -32,5 +43,4 @@ function App() {
     </BrowserRouter>
   );
 }
-
 export default App;
