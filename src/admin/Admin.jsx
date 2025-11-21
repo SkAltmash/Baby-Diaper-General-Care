@@ -17,9 +17,9 @@ export default function AdminDashboard() {
       color: "bg-green-500",
     },
     {
-      name: "Add Product",
+      name: "All Reviews",
       icon: <PlusCircle size={30} />,
-      link: "/admin/products/add",
+      link: "/admin/reviews",
       color: "bg-purple-500",
     },
     {
@@ -28,18 +28,7 @@ export default function AdminDashboard() {
       link: "/admin/users",
       color: "bg-orange-500",
     },
-    {
-      name: "Settings",
-      icon: <Settings size={30} />,
-      link: "/admin/settings",
-      color: "bg-gray-600",
-    },
-    {
-      name: "Logout",
-      icon: <LogOut size={30} />,
-      link: "/admin/logout",
-      color: "bg-red-500",
-    },
+  
   ];
 
   return (

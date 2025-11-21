@@ -24,7 +24,7 @@ export default function CheckoutPage() {
     phone: "",
     address: "",
     pincode: "",
-    paymentMode: "COD", // <-- Only COD allowed
+    paymentMode: "COD", 
   });
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
@@ -70,6 +70,7 @@ export default function CheckoutPage() {
           amount: total,
           paymentMode: "COD",
           shipping: details,
+          status: "Pending",
           createdAt: Date.now(),
         }
       );

@@ -7,7 +7,7 @@ import { getProductByCustomId } from "../utlis/firestoreProducts";
 import ProductDetailsSkeleton from "../components/ProductDetailsSkeleton";
 import Recommendations from "../components/Recommendations";
 import { CartContext } from "../context/CartContext";
-
+import ReviewsSection from "../components/ReviewsSection";
 export default function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -222,6 +222,9 @@ export default function ProductDetails() {
 
       {/* RECOMMENDATIONS */}
       <Recommendations currentProduct={product} />
+
+            <ReviewsSection productId={product.id} />
+
     </motion.div>
   );
 }
